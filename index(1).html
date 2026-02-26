@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEAS 化学能航空航天团队</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: "Microsoft YaHei", "黑体", sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        :root {
+            --tech-blue: #1a56db;
+            --deep-space-gray: #1e293b;
+            --light-gray: #f1f5f9;
+            --white: #ffffff;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--deep-space-gray) 0%, #0f172a 100%);
+            padding: 15px 30px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-bottom: 1px solid #3a4a66;
+        }
+
+        /* 内容容器 - 限制最大宽度，适配宽屏 */
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1600px) {
+            .content-container {
+                max-width: 1200px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .content-container {
+                max-width: 1000px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-container {
+                max-width: 100%;
+                padding: 0 15px;
+            }
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo a {
+            display: inline-block;
+        }
+
+        .logo img {
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-links a:hover {
+            color: #06b6d4;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #06b6d4;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* 主内容区域 */
+        main {
+            margin-top: 70px;
+        }
+
+        section {
+            padding: 80px 0;
+            width: 100%;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        h1 {
+            font-size: 42px;
+            color: var(--deep-space-gray);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: var(--tech-blue);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: var(--deep-space-gray);
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 15px;
+        }
+
+        /* 首页横幅 */
+        .hero {
+            background: linear-gradient(135deg, var(--deep-space-gray) 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+            padding: 120px 0;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .hero .content-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--tech-blue), #06b6d4);
+            color: white;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(26, 86, 219, 0.4);
+        }
+
+        /* 产品卡片 */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 180px;
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--deep-space-gray);
+            margin-bottom: 10px;
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .status-upcoming {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-achievement {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .product-params {
+            margin-top: 15px;
+        }
+
+        .param-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .param-label {
+            color: #64748b;
+        }
+
+        .param-value {
+            color: var(--deep-space-gray);
+            font-weight: 500;
+        }
+
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted #64748b;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--deep-space-gray);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 100;
+        }
+
+        /* 团队介绍 */
+        .team-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .team-highlight {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .highlight-item {
+            text-align: center;
+        }
+
+        .highlight-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--tech-blue);
+        }
+
+        .highlight-text {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        /* 技术创新背景 */
+        #tech {
+            background-image: url('./images/backboard.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #tech .content-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        #tech::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            z-index: 1;
+        }
+
+        #tech h2,
+        #tech p {
+            color: #f1f5f9;
+        }
+
+        #tech h3 {
+            color: #00a8e8;
+        }
+
+        /* 技术创新介绍 */
+        .tech-intro {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .tech-intro p {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        /* 技术创新 */
+        .tech-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tech-item {
+            background-color: rgba(0, 168, 232, 0.1);
+            border-left: 4px solid #00a8e8;
+            padding: 25px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .tech-item p {
+            color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        /* 成果展示 */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .achievement-card {
+            background: white;
+            padding: 25px;
+            border-radius: 2px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .achievement-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .video-container {
+            background: linear-gradient(135deg, var(--deep-space-gray), #0f172a);
+            padding: 40px;
+            border-radius: 2px;
+            margin-top: 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .video-placeholder {
+            background: rgba(255,255,255,0.1);
+            height: 300px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        /* 视频轮播 */
+        .video-carousel {
+            position: relative;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            overflow: hidden;
+            border-radius: 8px;
+            border: 2px solid #0f172a;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .carousel-slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .test-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-indicators.right {
+            left: auto;
+            right: 10px;
+        }
+
+        .video-carousel:hover .carousel-indicators {
+            opacity: 1;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background-color: rgba(0, 168, 232, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: #00a8e8;
+            border-color: white;
+        }
+
+        .indicator:hover {
+            background-color: #00a8e8;
+            border-color: white;
+        }
+
+        /* 支持我们 */
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .support-card {
+            background: white;
+            padding: 30px;
+            border-radius: 2px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .donation-qr {
+            width: 200px;
+            height: 200px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: var(--light-gray);
+            border-radius: 2px;
+            text-decoration: none;
+            color: var(--deep-space-gray);
+            transition: background 0.3s;
+        }
+
+        .contact-link:hover {
+            background: #e2e8f0;
+        }
+
+        /* 研发动态 */
+        .updates-section {
+            background: var(--deep-space-gray);
+            color: white;
+        }
+
+        .updates-section h2 {
+            color: #06b6d4;
+        }
+
+        .update-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+
+        .update-date {
+            color: #06b6d4;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .update-title {
+            color: white;
+            font-size: 16px;
+        }
+
+        /* 搜索框 */
+        .search-container {
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+
+        .search-box button {
+            padding: 12px 25px;
+            background: var(--tech-blue);
+            color: white;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* 页脚 */
+        footer {
+            background: var(--deep-space-gray);
+            color: #94a3b8;
+            padding: 30px;
+            text-align: center;
+        }
+
+        footer p {
+            color: #94a3b8;
+            margin-bottom: 0;
+        }
+
+        /* 产品系列相关样式 */
+        .product-series-section {
+            margin-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
+
+        .series-toggle-btn {
+            width: 100%;
+            padding: 10px 15px;
+            background: var(--tech-blue);
+            color: white;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .series-toggle-btn:hover {
+            background: #1e40af;
+        }
+
+        .toggle-icon {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .series-content {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .series-content.active {
+            display: block;
+        }
+
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .series-card {
+            background: var(--light-gray);
+            padding: 15px;
+            border-radius: 2px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .series-card:hover {
+            transform: translateY(-2px);
+            background: #e2e8f0;
+        }
+
+        .series-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--deep-space-gray);
+            margin-bottom: 5px;
+        }
+
+        .series-desc {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            section {
+                padding: 50px 20px;
+            }
+
+            .team-highlight {
+                gap: 30px;
+            }
+
+            .series-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="#home">
+                    <img src="./images/logo.png" alt="CEAS" style="height: 40px; object-fit: contain;">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于团队</a></li>
+                <li><a href="#products">产品中心</a></li>
+                <li><a href="#tech">技术创新</a></li>
+                <li><a href="#achievements">成果展示</a></li>
+                <li><a href="#support">支持我们</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main>
+        <!-- 首页 Hero 区域 -->
+        <section id="home" class="hero">
+            <video autoplay muted playsinline class="hero-video" onended="videoEnded()">
+                <source src="./images/logovedio.mp4" type="video/mp4">
+                您的浏览器不支持视频播放
+            </video>
+            <div class="content-container">
+            <h1>CEAS 化学能航空航天团队</h1>
+            <p>敢闯敢试的创新思维，中学生自主研发航天技术</p>
+            <a href="#products" class="btn">查看产品中心</a>
+            </div>
+        </section>
+
+        <!-- 站内搜索 -->
+        <section>
+            <div class="content-container">
+            <div class="search-container">
+                <h3 style="text-align: center; margin-bottom: 20px;">站内搜索</h3>
+                <div class="search-box">
+                <input type="text" placeholder="搜索发动机型号、技术名称..." id="searchInput">
+                <button onclick="search()">搜索</button>
+            </div>
+        </div>
+        </div>
+        </section>
+
+        <!-- 关于团队 -->
+        <section id="about">
+            <div class="content-container">
+            <h2>关于团队</h2>
+            <div class="team-content">
+                <p>我们是一支充满热情的中学生科创团队，专注于固体推进技术的研发与创新。</p>
+                <p>团队秉持敢闯敢试的创新思维，致力于推动中国民间航天事业的发展。</p>
+                <div class="team-highlight">
+                    <div class="highlight-item">
+                        <div class="highlight-number">3</div>
+                        <div class="highlight-text">款发动机设计</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-number">2</div>
+                        <div class="highlight-text">年研发历程</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-number">N+</div>
+                        <div class="highlight-text">次测试实验</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- 产品中心 -->
+        <section id="products">
+            <div class="content-container">
+            <h2>产品中心</h2>
+            <div class="products-grid">
+                <!-- CE34 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="./images/ce34.png" alt="CE34发动机" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-title">CE34</div>
+                        <span class="status-tag status-upcoming">即将发售</span>
+                        <div class="product-params">
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="发动机尺寸（直径×高度×长度）">尺寸</span>
+                                <span class="param-value">34×30×180</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="发动机产生的最大推力">最大推力</span>
+                                <span class="param-value">230N</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="推力对时间的积分，衡量总做功能力">总冲</span>
+                                <span class="param-value">约140N·s</span>
+                            </div>
+                        </div>
+                        <div class="product-series-section">
+                            <button class="series-toggle-btn" onclick="toggleSeries('ce34-series', 'CE34')">
+                                查看 CE34 系列产品
+                                <span class="toggle-icon">▼</span>
+                            </button>
+                            <div id="ce34-series" class="series-content">
+                                <div class="series-grid">
+                                    <!-- CE34HP-C -->
+                                    <div class="series-card">
+                                        <div class="series-title">CE34HP-C</div>
+                                        <div class="series-desc">半打印锥喷版</div>
+                                    </div>
+                                    <!-- CE34HP-B -->
+                                    <div class="series-card">
+                                        <div class="series-title">CE34HP-B</div>
+                                        <div class="series-desc">半打印钟喷版</div>
+                                    </div>
+                                    <!-- CE34S-C -->
+                                    <div class="series-card">
+                                        <div class="series-title">CE34S-C</div>
+                                        <div class="series-desc">全钢锥喷版</div>
+                                    </div>
+                                    <!-- CE34S-B -->
+                                    <div class="series-card">
+                                        <div class="series-title">CE34S-B</div>
+                                        <div class="series-desc">全钢钟喷版</div>
+                                    </div>
+                                    <!-- CE34S-A -->
+                                    <div class="series-card">
+                                        <div class="series-title">CE34S-A</div>
+                                        <div class="series-desc">全钢气尖版</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- M27 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="./images/m27.png" alt="M27发动机" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-title">M27</div>
+                        <span class="status-tag status-upcoming">即将发售</span>
+                        <div class="product-params">
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="发动机尺寸（直径×高度×长度）">尺寸</span>
+                                <span class="param-value">27×25×111</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="发动机产生的最大推力">最大推力</span>
+                                <span class="param-value">118.76N</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="推力对时间的积分，衡量总做功能力">总冲</span>
+                                <span class="param-value">约120N·s</span>
+                            </div>
+                        </div>
+                        <div class="product-series-section">
+                            <button class="series-toggle-btn" onclick="toggleSeries('m27-series', 'M27')">
+                                查看 M27 系列产品
+                                <span class="toggle-icon">▼</span>
+                            </button>
+                            <div id="m27-series" class="series-content">
+                                <div class="series-grid">
+                                    <!-- M27-P -->
+                                    <div class="series-card">
+                                        <div class="series-title">M27-P</div>
+                                        <div class="series-desc">打印版</div>
+                                    </div>
+                                    <!-- M27-S -->
+                                    <div class="series-card">
+                                        <div class="series-title">M27-S</div>
+                                        <div class="series-desc">全钢版</div>
+                                    </div>
+                                    <!-- M27-A -->
+                                    <div class="series-card">
+                                        <div class="series-title">M27-A</div>
+                                        <div class="series-desc">气尖版</div>
+                                    </div>
+                                    <!-- M27-CF -->
+                                    <div class="series-card">
+                                        <div class="series-title">M27-CF</div>
+                                        <div class="series-desc">碳纤维版</div>
+                                    </div>
+                                    <!-- M27CF-A -->
+                                    <div class="series-card">
+                                        <div class="series-title">M27CF-A</div>
+                                        <div class="series-desc">碳纤维气尖版</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CE70 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="./images/ce70.png" alt="CE70发动机" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-title">CE70</div>
+                        <span class="status-tag status-achievement">成果转化</span>
+                        <div class="product-params">
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="发动机尺寸（直径×高度×长度）">尺寸</span>
+                                <span class="param-value">70×60×300</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="发动机产生的最大推力">最大推力</span>
+                                <span class="param-value">1150N</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="推力对时间的积分，衡量总做功能力">总冲</span>
+                                <span class="param-value">3000N·s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 分隔线 -->
+            <div style="height: 2px; background-color: #3a4a66; margin: 40px 0;"></div>
+            
+            <!-- 火箭产品 -->
+            <div class="products-grid">
+                <!-- 星山-1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="./images/xingshan-1(1).jpg" alt="星山-1火箭" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-title">星山-1</div>
+                        <span class="status-tag status-upcoming">即将发射</span>
+                        <div class="product-params">
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭型号">型号</span>
+                                <span class="param-value">xingshan-1</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭状态">状态</span>
+                                <span class="param-value">研发中</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="最大飞行高度">最大飞行高度</span>
+                                <span class="param-value">1100m</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="最大速度">最大速度</span>
+                                <span class="param-value">1.1马赫</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭长度">长度</span>
+                                <span class="param-value">600mm</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭直径">直径</span>
+                                <span class="param-value">40mm</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭重量">重量</span>
+                                <span class="param-value">约220g</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 方程式-1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="./images/Equation-1(1).jpg" alt="方程式-1火箭" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-title">方程式-1</div>
+                        <span class="status-tag status-upcoming">即将发射</span>
+                        <div class="product-params">
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭型号">型号</span>
+                                <span class="param-value">Equation-1</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭状态">状态</span>
+                                <span class="param-value">研发中</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="最大飞行高度">最大飞行高度</span>
+                                <span class="param-value">70m</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="最大速度">最大速度</span>
+                                <span class="param-value">25km/h</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭长度">长度</span>
+                                <span class="param-value">800mm</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭直径">直径</span>
+                                <span class="param-value">50mm</span>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label tooltip" data-tip="火箭重量">重量</span>
+                                <span class="param-value">1.2kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://m.tb.cn/h.ia5yiAoAM3ZwgpX" target="_blank" class="btn">访问淘宝店 "CEAS 航空航天"</a>
+            </div>
+            </div>
+        </section>
+
+        <!-- 技术创新 -->
+        <section id="tech">
+            <div class="content-container">
+            <h2>技术创新</h2>
+            <div class="tech-intro">
+                <p>我们不断探索固体火箭发动机技术的前沿，通过自主研发实现了多项技术突破，为中国民间航天事业贡献力量。</p>
+                <p>从材料配方到结构设计，每一项创新都凝聚了团队成员的智慧与汗水。</p>
+            </div>
+            <div class="tech-list">
+                <div class="tech-item">
+                    <h3>烧蚀喷管技术</h3>
+                    <p><span class="tooltip" data-tip="通过材料烧蚀来冷却喷管的技术">烧蚀喷管</span>采用不耐高温复合材料，烧蚀代替结构强度，显著提升发动机工作时间。</p>
+                </div>
+                <div class="tech-item">
+                    <h3>复合推进剂配方</h3>
+                    <p>自主研发的复合推进剂配方，平衡了能量密度与燃烧稳定性，为发动机提供可靠动力源。</p>
+                </div>
+                <div class="tech-item">
+                    <h3>模块化设计</h3>
+                    <p>发动机采用模块化设计理念，便于组装、测试与维护，大幅降低了研发与生产成本。</p>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- 成果展示 -->
+        <section id="achievements">
+            <div class="content-container">
+            <h2>成果展示</h2>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">🏆</div>
+                    <h3>多款发动机设计</h3>
+                    <p>完成 CE34、M27、CE70 等多款固体火箭发动机的设计与测试</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">📹</div>
+                    <h3>多平台视频展示</h3>
+                    <p>研究成果已在多个视频平台展示，获得广泛关注</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">🔬</div>
+                    <h3>持续技术优化</h3>
+                    <p>不断迭代优化设计，提升发动机性能与可靠性</p>
+                </div>
+            </div>
+            <div class="video-container">
+                <div class="video-carousel">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide active">
+                            <video controls class="test-video">
+                                <source src="./images/StaticFireTest1.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放
+                            </video>
+                        </div>
+                        <div class="carousel-slide">
+                            <video controls class="test-video">
+                                <source src="./images/StaticFireTest2.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放
+                            </video>
+                        </div>
+                        <div class="carousel-slide">
+                            <video controls class="test-video">
+                                <source src="./images/StaticFireTest3.mp4" type="video/mp4">
+                                您的浏览器不支持视频播放
+                            </video>
+                        </div>
+                    </div>
+                    <div class="carousel-indicators">
+                        <button class="indicator active" onclick="switchSlide(0)"></button>
+                        <button class="indicator" onclick="switchSlide(1)"></button>
+                        <button class="indicator" onclick="switchSlide(2)"></button>
+                    </div>
+                    <div class="carousel-indicators right">
+                        <button class="indicator active" onclick="switchSlide(0)"></button>
+                        <button class="indicator" onclick="switchSlide(1)"></button>
+                        <button class="indicator" onclick="switchSlide(2)"></button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- 支持我们 -->
+        <section id="support">
+            <div class="content-container">
+            <h2>支持我们</h2>
+            <div class="support-grid">
+                <div class="support-card">
+                    <h3>微信捐赠</h3>
+                    <p style="font-size: 13px;">您的捐赠将用于固体推进技术的研发与测试，感谢支持！</p>
+                    <div class="donation-qr">
+                        <img src="./images/QRcode-raisemoney.png" alt="微信捐赠二维码" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <p style="font-size: 12px; color: #64748b;">微信扫码支付</p>
+                </div>
+                <div class="support-card">
+                    <h3>联系我们</h3>
+                    <div class="contact-links">
+                        <a href="#" class="contact-link">
+                            <span>💬</span>
+                            <span>微信: zmwjy114514</span>
+                        </a>
+                        <a href="https://m.tb.cn/h.ia5yiAoAM3ZwgpX" target="_blank" class="contact-link">
+                            <span>🛒</span>
+                            <span>淘宝店直达</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="support-card">
+                    <h3>关注动态</h3>
+                    <p>本网站每周更新团队研发进展，敬请关注！</p>
+                    <div style="margin-top: 20px;">
+                        <a href="#updates" class="btn" style="display: block; margin-bottom: 10px;">查看研发动态</a>
+                        <a href="https://space.bilibili.com/3546731964795077?spm_id_from=333.788.upinfo.head.click" target="_blank" style="display: block;">
+                            <div style="display: block; background-color: white; border: 2px solid #00a8e8; border-radius: 4px; padding: 10px 20px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-align: center;">
+                                <img src="./images/Bilibili_logo_blue.png" alt="Bilibili" style="width: 120px; height: auto; display: inline-block;">
+                            </div>
+                        </a>
+                        <button onclick="toggleVideoQR()" style="width: 100%; padding: 12px 20px; background-color: #00a8e8; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: all 0.3s ease; margin-top: 10px;">
+                            关注我们的视频号
+                        </button>
+                        <div id="video-qr-content" style="display: none; margin-top: 20px; text-align: center; padding: 20px; background-color: #f8fafc; border-radius: 8px;">
+                            <img src="./images/QRcode-video.png" alt="视频号二维码" style="width: 200px; height: auto; display: block; margin: 0 auto;">
+                            <p style="margin-top: 10px; color: #64748b; font-size: 14px;">扫码关注我们的视频号</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- 研发动态 -->
+        <section id="updates" class="updates-section">
+            <div class="content-container">
+            <h2>研发动态</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="update-item">
+                    <div class="update-date">2026-02-20</div>
+                    <div class="update-title">CE70 发动机燃烧室压力测试成功</div>
+                </div>
+                <div class="update-item">
+                    <div class="update-date">2026-02-15</div>
+                    <div class="update-title">新型推进剂配方完成小型试验</div>
+                </div>
+                <div class="update-item">
+                    <div class="update-date">2026-02-08</div>
+                    <div class="update-title">M27 发动机优化版设计完成</div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="content-container">
+        <p>CEAS 化学能航空航天团队所有 © 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '70px';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'var(--deep-space-gray)';
+                navLinks.style.padding = '20px';
+            }
+        }
+
+        function toggleSeries(id, productName) {
+            const content = document.getElementById(id);
+            const btn = content.previousElementSibling;
+            const icon = btn.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.classList.remove('active');
+                btn.innerHTML = '查看 ' + productName + ' 系列产品 <span class="toggle-icon">▼</span>';
+            } else {
+                content.classList.add('active');
+                icon.classList.add('active');
+                btn.innerHTML = '收起 ' + productName + ' 系列产品 <span class="toggle-icon active">▼</span>';
+            }
+        }
+
+        function toggleVideoQR() {
+            const content = document.getElementById('video-qr-content');
+            const btn = content.previousElementSibling;
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                btn.textContent = '收起视频号二维码';
+            } else {
+                content.style.display = 'none';
+                btn.textContent = '关注我们的视频号';
+            }
+        }
+
+        function videoEnded() {
+            const video = document.querySelector('.hero-video');
+            if (video) {
+                video.style.display = 'none';
+            }
+        }
+
+        function switchSlide(index) {
+            // 隐藏所有幻灯片
+            const slides = document.querySelectorAll('.carousel-slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // 移除所有指示器的激活状态
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // 显示选中的幻灯片
+            slides[index].classList.add('active');
+            
+            // 激活对应的指示器（两侧都要更新）
+            const indicatorGroups = document.querySelectorAll('.carousel-indicators');
+            indicatorGroups.forEach(group => {
+                const groupIndicators = group.querySelectorAll('.indicator');
+                if (groupIndicators[index]) {
+                    groupIndicators[index].classList.add('active');
+                }
+            });
+        }
+
+        function search() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (query) {
+                alert('搜索功能开发中(≧﹏ ≦)，您搜索的是: ' + query);
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
